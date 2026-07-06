@@ -1,0 +1,76 @@
+name: Deploy iRead Games
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    name: Deploy to Ubuntu server
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy over SSH
+        env:
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+          SERVER_USER: ${{ vars.SERVER_USER }}
+          SERVER_IP: ${{ vars.SERVER_IP }}
+          SERVER_PORT: ${{ vars.SERVER_PORT || '22' }}
+          SERVER_PATH: ${{ vars.SERVER_PATH || '/var/www/html/iread/iread-games' }}
+          REPO_URL: ${{ vars.REPO_URL || 'https://github.com/Mouadhattia/iRead_Games.git' }}
+        run: |
+          set -euo pipefail
+
+          if [ -z "${SSH_KEY:-}" ] || [ -z "${SERVER_USER:-}" ] || [ -z "${SERVER_IP:-}" ]; then
+            echo "Missing SSH_KEY secret or SERVER_USER/SERVER_IP repository variables." >&2
+            exit 1
+          fi
+
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+          printf '%s\n' "$SSH_KEY" | tr -d '\r' > ~/.ssh/iread_deploy_key
+          chmod 600 ~/.ssh/iread_deploy_key
+
+          ssh-keyscan -p "$SERVER_PORT" -H "$SERVER_IP" >> ~/.ssh/known_hosts
+
+          remote_command="APP_DIR=$(printf '%q' "$SERVER_PATH") REPO_URL=$(printf '%q' "$REPO_URL") bash -s"
+
+          ssh -i ~/.ssh/iread_deploy_key \
+            -p "$SERVER_PORT" \
+            "$SERVER_USER@$SERVER_IP" \
+            "$remote_command" <<'EOF'
+          set -euo pipefail
+
+          echo "Deploying iRead Games to $APP_DIR"
+
+          git config --global --add safe.directory "$APP_DIR"
+
+          if [ -d "$APP_DIR/.git" ]; then
+            echo "Repo already exists, pulling latest main"
+            cd "$APP_DIR"
+            git fetch origin main
+            git reset --hard origin/main
+            git clean -fd
+          else
+            echo "Repo not found, cloning fresh"
+            mkdir -p "$(dirname "$APP_DIR")"
+            git clone "$REPO_URL" "$APP_DIR"
+            cd "$APP_DIR"
+          fi
+
+          echo "Installing dependencies"
+          npm ci
+
+          echo "Building"
+          npm run build
+
+          echo "Starting/restarting pm2 process iread-games"
+          if pm2 describe iread-games > /dev/null 2>&1; then
+            pm2 restart iread-games --update-env
+          else
+            pm2 start npm --name iread-games -- run start
+          fi
+          pm2 save
+          EOF
