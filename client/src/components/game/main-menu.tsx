@@ -101,7 +101,6 @@ export default function MainMenu() {
   const id = query.get("id");
   const schoolId =
     query.get("school_id") || query.get("school") || query.get("shcool_id");
-  const packId = query.get("pack_id");
   const { view, setView, isKids } = useGameView();
   const menuTitle = isKids ? "Game Time!" : "iRead Arena";
   const menuSubtitle = isKids
@@ -130,7 +129,6 @@ export default function MainMenu() {
     if (id) params.set("id", id);
     if (schoolId) params.set("school_id", schoolId);
     if (user?.id) params.set("user_id", String(user.id));
-    if (packId) params.set("pack_id", packId);
     const queryString = params.toString();
     return queryString ? `${path}?${queryString}` : path;
   };
@@ -139,7 +137,6 @@ export default function MainMenu() {
     if (id) params.set("id", id);
     if (schoolId) params.set("school_id", schoolId);
     if (user?.id) params.set("user_id", String(user.id));
-    if (packId) params.set("pack_id", packId);
     params.set("competition", "true");
     return `${path}?${params.toString()}`;
   };
@@ -274,7 +271,7 @@ export default function MainMenu() {
     }
   };
   // const ireadApi = "http://localhost:5003"; // Replace with your actual API URL
-  const ireadApi = "api.iread.education"; // Replace with your actual API URL
+  const ireadApi = "https://api.iread.education"; // Replace with your actual API URL
   useEffect(() => {
     const fetchUser = async () => {
       try {
