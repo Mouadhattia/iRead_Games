@@ -1,0 +1,89 @@
+User Stories for Strands-Inspired Word Puzzle Game
+These user stories define the core features of a Strands-like game, where players find hidden words in a letter grid based on a given theme.
+
+1️⃣ Game Setup & Puzzle Generation
+User Story: As a Player, I Want to See a Themed Word Grid
+As a player,
+I want to see a grid of letters related to a theme,
+So that I can find and connect words that match the theme.
+
+Acceptance Criteria:
+
+The game presents a grid of random letters at the start.
+The grid size can vary (e.g., 6x8, 7x7, or 8x8) based on difficulty.
+A theme or hint is displayed to guide the player.
+At least one Spangram (a connecting phrase or key word) exists in the puzzle.
+The system ensures that all words fit the theme before the puzzle starts.
+2️⃣ Word Selection & Validation
+User Story: As a Player, I Want to Select Words from the Grid
+As a player,
+I want to select letters from the grid to form words,
+So that I can find theme-related words and complete the puzzle.
+
+Acceptance Criteria:
+
+Players can select letters by swiping or tapping in any direction.
+The system checks if the selected letters form a valid word in the predefined word list.
+If the word is valid, it is highlighted, and the letters are removed or marked.
+If the word is invalid, no action is taken, and the player is notified.
+Words must be at least three letters long (or configurable based on difficulty).
+Players can only use connected letters (no skipping or jumping).
+3️⃣ Spangram Discovery (Key Connecting Word)
+User Story: As a Player, I Want to Find the Spangram
+As a player,
+I want to find the Spangram (a special word that connects other words),
+So that I can reveal a key hint for solving the puzzle.
+
+Acceptance Criteria:
+
+Each puzzle has one Spangram, which connects multiple words in the theme.
+The Spangram must be formed by tracing letters in order.
+When the Spangram is found, it is highlighted, and a bonus or hint is awarded.
+The Spangram remains visible while the player searches for other words.
+The game notifies the player when they find the Spangram.
+4️⃣ Scoring System & Hints
+User Story: As a Player, I Want to Earn Points for Valid Words
+As a player,
+I want to earn points for each correct word I find,
+So that I can track my progress and get a high score.
+
+Acceptance Criteria:
+
+Each correct word adds points to the score.
+Longer words award more points.
+Finding the Spangram gives bonus points.
+A leaderboard tracks daily best scores (optional for competitive mode).
+User Story: As a Player, I Want to Use Hints When Stuck
+As a player,
+I want to use hints to reveal letters or possible words,
+So that I can progress when I get stuck.
+
+Acceptance Criteria:
+
+Players can request hints (limited per game).
+Hints may highlight a letter in the grid or suggest a word.
+Hints cost points or attempts to prevent overuse.
+Players can earn extra hints by completing a Spangram or reaching score milestones.
+5️⃣ Game Completion & Progress Tracking
+User Story: As a Player, I Want to Complete the Puzzle
+As a player,
+I want to finish the puzzle by finding all words,
+So that I can complete the challenge and see my final score.
+
+Acceptance Criteria:
+
+The puzzle is completed when all words from the theme are found.
+A completion message appears, showing the final score and time taken.
+Players can restart or play the next puzzle.
+The system tracks streaks for consecutive days played (optional feature).
+6️⃣ Daily Puzzles & Multiplayer (Optional Features)
+User Story: As a Player, I Want to Play a New Puzzle Daily
+As a player,
+I want to have a new puzzle available each day,
+So that I can play regularly and improve my skills.
+
+Acceptance Criteria:
+
+A new puzzle is generated daily at a fixed time.
+Players can view a history of past puzzles (optional).
+The system prevents players from replaying the same puzzle twice.

@@ -1,0 +1,27 @@
+{
+  "results": [
+    {
+      "id": "2025-02-11-daily",
+      "date": "2025-02-11T00:00:00Z",
+      "words": [
+        {
+          "word": "THINK",
+          "guesses": ["THEIR", "THANK", "THINK"],
+          "won": true,
+          "guessCount": 3,
+          "timeSpent": 145
+        },
+        {
+          "word": "SMART",
+          "guesses": ["START", "SMART"],
+          "won": true,
+          "guessCount": 2,
+          "timeSpent": 95
+        }
+      ],
+      "totalScore": 150,
+      "packCompleted": true,
+      "hintsUsed": 0
+    }
+  ]
+}

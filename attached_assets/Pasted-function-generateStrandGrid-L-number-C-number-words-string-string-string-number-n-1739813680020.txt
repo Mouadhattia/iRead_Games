@@ -1,0 +1,115 @@
+function generateStrandGrid(L: number, C: number, words: string[]): [string[][], [string, [number, number][]][]] {
+    /**
+     * Generate a grid with the given words placed in a strand-like manner.
+     * Words can overlap, and the grid is filled with random letters after word placement.
+     *
+     * @param L - Number of rows in the grid.
+     * @param C - Number of columns in the grid.
+     * @param words - List of words to place in the grid.
+     * @returns A tuple containing the grid (2D array) and a list of word positions with paths.
+     */
+
+    // Helper function to check if a position is within bounds
+    const isValidPosition = (row: number, col: number): boolean => {
+        return row >= 0 && row < L && col >= 0 && col < C;
+    };
+
+    // Helper function to get all adjacent cells (including diagonals)
+    const getNeighbors = (row: number, col: number): [number, number][] => {
+        const directions: [number, number][] = [
+            [-1, -1], [-1, 0], [-1, 1],
+            [0, -1], [0, 1],
+            [1, -1], [1, 0], [1, 1],
+        ];
+        return directions
+            .map(([dr, dc]) => [row + dr, col + dc] as [number, number])
+            .filter(([r, c]) => isValidPosition(r, c));
+    };
+
+    // Helper function to place a word in the grid using backtracking
+    const placeWord = (word: string, grid: string[][]): boolean => {
+        const backtrack = (
+            index: number,
+            row: number,
+            col: number,
+            path: [number, number][]
+        ): boolean => {
+            if (index === word.length) {
+                return true; // Word successfully placed
+            }
+            if (!isValidPosition(row, col) || (grid[row][col] !== "" && grid[row][col] !== word[index])) {
+                return false; // Invalid position or mismatch
+            }
+
+            const temp = grid[row][col]; // Save the current cell value
+            grid[row][col] = word[index]; // Place the current letter
+            path.push([row, col]); // Add the position to the path
+
+            // Try to place the next letter in a neighboring cell
+            for (const [nr, nc] of getNeighbors(row, col)) {
+                if (backtrack(index + 1, nr, nc, path)) {
+                    return true; // Successfully placed the word
+                }
+            }
+
+            // Backtrack: undo the placement
+            grid[row][col] = temp;
+            path.pop();
+            return false;
+        };
+
+        // Try to place the word starting from every cell in the grid
+        for (let row = 0; row < L; row++) {
+            for (let col = 0; col < C; col++) {
+                const path: [number, number][] = [];
+                if (backtrack(0, row, col, path)) {
+                    wordPositions.push([word, path]); // Track the word and its path
+                    return true;
+                }
+            }
+        }
+        return false; // Word could not be placed
+    };
+
+    // Initialize an empty grid
+    const grid: string[][] = Array.from({ length: L }, () => Array(C).fill(""));
+    const wordPositions: [string, [number, number][]][] = []; // List to store word positions and paths
+
+    // Place words in the grid
+    for (const word of words) {
+        if (!placeWord(word, grid)) {
+            console.warn(`Warning: Could not place word '${word}' in the grid.`);
+        }
+    }
+
+    // Fill remaining empty cells with random letters
+    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    for (let row = 0; row < L; row++) {
+        for (let col = 0; col < C; col++) {
+            if (grid[row][col] === "") {
+                grid[row][col] = letters[Math.floor(Math.random() * letters.length)];
+            }
+        }
+    }
+
+    return [grid, wordPositions];
+}
+
+// Example usage
+const L = 5; // Number of rows
+const C = 5; // Number of columns
+const words = ["HELLO", "WORLD", "PYTHON"];
+
+const [grid, wordPositions] = generateStrandGrid(L, C, words);
+
+// Print the grid
+console.log("Grid:");
+for (const row of grid) {
+    console.log(row.join(" "));
+}
+
+// Print word positions
+console.log("\nWord Positions:");
+for (const [word, path] of wordPositions) {
+    console.log(`${word}: ${JSON.stringify(path)}`);
+}

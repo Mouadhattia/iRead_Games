@@ -1,0 +1,31 @@
+Product Backlog for Spelling Bee Game in React
+🎯 Epic: Spelling Bee Word Game
+As a user, I want to play a word game where I can form words using a set of seven letters, with a center letter that must be used in every word, so that I can improve my vocabulary and challenge myself.
+
+🔹 User Stories
+1. Game Setup & Word Input
+US-01: As a player, I want to see a set of seven letters with one center letter highlighted, so that I can start forming words.
+US-02: As a player, I want to input words using the seven letters, with the center letter in each word, so that I can participate in the game.
+US-03: As a player, I want my words to be validated against a dictionary, so that only real words are accepted.
+US-04: As a player, I want to be able to submit my guesses and get feedback on their validity (correct/incorrect), so I know which words I’ve formed.
+2. Game Progress & Scoring
+US-05: As a player, I want to earn points for valid words based on their length, so that I can keep track of my progress.
+US-06: As a player, I want to know the total score based on my valid words, so that I can compete with myself or others.
+US-07: As a player, I want to know if I have found the "pangram" (using all seven letters), so I can achieve a bonus and complete the game.
+US-08: As a player, I want to know the remaining time, so I can make my decisions faster as the game progresses.
+3. UI & UX Enhancements
+US-09: As a player, I want a clean and interactive UI where I can easily see the letters, my words, and my score, so I can focus on playing.
+US-10: As a player, I want to see an animation when I form a valid word, so I feel rewarded and encouraged.
+US-11: As a player, I want to have a sound effect when I find a valid word or the pangram, so I feel engaged.
+4. Daily Challenge & Leaderboard
+US-12: As a player, I want to have a new set of letters every day, so I can have a fresh challenge each time I play.
+US-13: As a player, I want to see a leaderboard with top scores from my friends or globally, so I can compare my performance.
+US-14: As a player, I want to track my performance over time and see my improvement in scores, so I can challenge myself to do better.
+5. Social Sharing & Multiplayer (Optional)
+US-15: As a player, I want to share my scores on social media, so I can show off my achievements and challenge others to beat my score.
+US-16: As a player, I want to compete with friends in multiplayer mode, so we can see who can form the most words.
+🔹 Technical Requirements
+Game Logic: The game logic will need to handle word validation using a dictionary API (like WordsAPI or a custom word list).
+Timer: A countdown timer for each round (daily challenge or custom rounds).
+Scoring System: A system that gives more points for longer words and special bonuses for the pangram.
+Leaderboard: A basic leaderboard that tracks the highest scores over time.

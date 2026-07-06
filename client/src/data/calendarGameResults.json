@@ -1,0 +1,28 @@
+{
+  "results": [
+    {
+      "id": "2025-02-calendar",
+      "month": "2025-02",
+      "challenges": [
+        {
+          "day": 1,
+          "completed": true,
+          "score": 120,
+          "words": ["SOLVE", "PRIZE", "SKILL"],
+          "totalGuesses": 8,
+          "hintsUsed": 0
+        },
+        {
+          "day": 2,
+          "completed": true,
+          "score": 140,
+          "words": ["DREAM", "EARTH", "SPACE"],
+          "totalGuesses": 7,
+          "hintsUsed": 1
+        }
+      ],
+      "monthlyScore": 260,
+      "challengesCompleted": 2
+    }
+  ]
+}

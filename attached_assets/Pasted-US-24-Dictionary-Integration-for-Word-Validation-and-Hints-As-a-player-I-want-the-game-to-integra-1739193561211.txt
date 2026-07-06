@@ -1,0 +1,90 @@
+US-24: Dictionary Integration for Word Validation and Hints
+As a player, I want the game to integrate with a dictionary API to provide real word definitions as hints instead of the current placeholder, so that I can better understand the word and make informed guesses.
+Acceptance Criteria:
+1.	The game should query a dictionary API to retrieve the definition of a word when a hint is requested.
+2.	The definition should be provided before the last guess, and it should not reveal the actual word.
+3.	The hint should be displayed clearly with a maximum character limit to avoid spoilers.
+4.	If the word does not exist in the dictionary, the game should display a fallback hint or message.
+5.	The dictionary integration should work seamlessly with the current word validation system.
+
+US-25: Daily Challenge with Multiple Words
+As a player, I want the daily challenge to include a pack of three to five words per day, so that I can have a more engaging and extended gameplay experience.
+Acceptance Criteria:
+1.	Each daily challenge should consist of a pack of three or five words.
+2.	Players must complete all words in the pack to finish the challenge.
+3.	Players can complete the challenge at their own pace but must finish it within the same day for the results to be recorded.
+4.	Scores should be calculated based on the total performance across all words in the pack.
+5.	The daily challenge should reset every day at a fixed time (e.g., 12:00 AM local time).
+
+US-26 Flexible Daily Challenge Completion
+US-26: Flexible Daily Challenge with Partial Scoring & Multi-Session Support
+As a player, I want to play a daily challenge consisting of multiple words (3-5) and have the flexibility to complete it across multiple sessions within the same day, so that I can continue playing at my convenience while still earning partial scores.
+Acceptance Criteria:
+1.	Daily Challenge Structure:
+o	Each daily challenge consists of 3 to 5 words selected for that day.
+o	Players can complete the words in any order.
+2.	Multi-Session Support:
+o	Players can pause and resume the daily challenge at any time before midnight.
+o	Previously completed words remain locked and cannot be replayed.
+3.	Partial Scoring System:
+o	If a player completes at least one word, they receive a score for that word.
+o	The final score for the day is the sum of all completed word scores.
+o	A bonus multiplier is applied if all words are completed.
+4.	End-of-Day Rules:
+o	The challenge resets at midnight with a new word pack.
+o	Any incomplete words will not count towards achievements or win streaks.
+o	Players can view their past incomplete games in the calendar but cannot replay them.
+5.	Leaderboard & Statistics:
+o	Scores are only ranked if at least 3 words are completed.
+o	The player’s stats will track win rate, average score, and words completed per challenge.
+
+________________________________________
+US-27: Daily Challenge Calendar for Past Games
+As a player, I want to access a calendar showing daily challenges from the last month, so that I can play missed challenges and track my past performance.
+Acceptance Criteria:
+1.	The calendar should display the last 30 days of daily challenges.
+2.	Players can select and play any missed challenges from the past month.
+3.	Completed challenges should be marked as "played," while missed ones remain accessible.
+4.	Players cannot replay a challenge that has already been completed.
+5.	Scores from past challenges should still be recorded in the statistics dashboard.
+6.	The calendar should be accessible from the main menu.
+________________________________________
+US-28: Achievement System (Expanded)
+As a player, I want an achievement system that rewards milestones such as winning streaks, quick wins, solving difficult words without hints, and completing consecutive daily challenges, so that I can stay motivated and track my progress.
+Acceptance Criteria:
+1.	The game should track and reward achievements for:
+o	Winning streaks (e.g., 5, 10, 20 wins in a row).
+o	Quick wins (solving a word in 3 guesses or less).
+o	No hint wins (solving a word without using any hints).
+o	Completing multiple daily challenges in a row (e.g., a 7-day streak of playing daily challenges).
+o	Mastering all word lengths (winning at least one game for each word length from 3 to 7 letters).
+2.	Achievements should be displayed in the player's profile.
+3.	Players should be notified when unlocking a new achievement.
+4.	Achievements should include visual badges or trophies for motivation.
+5.	Players should be able to view all available achievements and track progress toward unlocking them.
+________________________________________
+US-29: Statistics Dashboard (Expanded with Daily Challenges)
+As a player, I want to see a detailed statistics dashboard showing my overall and daily challenge performance, so that I can track my progress and compare my results over time.
+Acceptance Criteria:
+1.	The player’s statistics should include:
+o	Win rate by word length (3-7 letters).
+o	Average guesses needed per word length and overall.
+o	Best scores (from predefined words list).
+o	Longest winning streak (for both regular and daily challenge games).
+o	Total number of completed daily challenges.
+o	Performance breakdown for daily challenge words (accuracy, time taken, hints used).
+2.	The statistics should be updated automatically after each game.
+3.	Players should be able to filter their statistics by game type (regular mode vs. daily challenge).
+4.	The dashboard should have a monthly view showing performance trends over time.
+________________________________________
+US-30: Practice Mode (Expanded with Customization Options)
+As a player, I want a practice mode where I can play unlimited games with customizable settings, so that I can improve my skills without affecting my daily statistics.
+Acceptance Criteria:
+1.	Players should be able to select:
+o	Word length (3-7 letters).
+o	Number of guesses allowed (standard or custom).
+o	Hint availability (enabled or disabled).
+2.	Practice mode progress should not affect daily statistics.
+3.	The player should receive performance feedback at the end of a practice session.
+4.	The game should offer word definition hints, even in practice mode, to aid learning.
+5.	Players should have an option to repeat words they previously struggled with (tracked based on past games).

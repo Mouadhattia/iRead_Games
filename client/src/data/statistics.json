@@ -1,0 +1,76 @@
+{
+  "lifetime": {
+    "gamesPlayed": 150,
+    "wins": 120,
+    "losses": 30,
+    "streak": 5,
+    "bestStreak": 15,
+    "hintsUsed": 25,
+    "totalPoints": 3500,
+    "averageGuesses": 4.2,
+    "guessDistribution": {
+      "1": 10,
+      "2": 25,
+      "3": 35,
+      "4": 30,
+      "5": 15,
+      "6": 5
+    }
+  },
+  "modes": {
+    "classic": {
+      "gamesPlayed": 80,
+      "wins": 65,
+      "bestScore": 120,
+      "averageScore": 85,
+      "guessDistribution": {
+        "1": 5,
+        "2": 15,
+        "3": 20,
+        "4": 15,
+        "5": 8,
+        "6": 2
+      }
+    },
+    "daily": {
+      "gamesPlayed": 45,
+      "packCompleted": 35,
+      "bestScore": 180,
+      "averageScore": 145,
+      "totalWords": 250
+    },
+    "calendar": {
+      "monthsPlayed": 3,
+      "challengesCompleted": 65,
+      "bestMonthlyScore": 850,
+      "averageMonthlyScore": 720,
+      "totalStars": 45
+    }
+  },
+  "achievements": [
+    {
+      "id": "WINNING_STREAK_5",
+      "title": "Getting Warmed Up",
+      "description": "Win 5 games in a row",
+      "progress": 5,
+      "goal": 5,
+      "earnedAt": "2025-02-10T15:30:00Z"
+    },
+    {
+      "id": "DAILY_STREAK_7",
+      "title": "Week Warrior",
+      "description": "Complete 7 daily challenges in a row",
+      "progress": 4,
+      "goal": 7,
+      "earnedAt": null
+    },
+    {
+      "id": "WORD_LENGTH_MASTER",
+      "title": "Word Length Master",
+      "description": "Win games with all word lengths",
+      "progress": 3,
+      "goal": 5,
+      "earnedAt": null
+    }
+  ]
+}

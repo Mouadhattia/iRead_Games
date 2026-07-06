@@ -1,0 +1,41 @@
+US-18: Word Length & Guesses (Difficulty Selection at Game Start)
+As a player, I want to select the word length (3-7 letters) at the start of the game so that I can adjust the difficulty level, with the number of guesses scaling accordingly:
+•	3-letter word → 8 guesses
+•	4-letter word → 7 guesses
+•	5-letter word → 6 guesses (default)
+•	6-letter word → 5 guesses
+•	7-letter word → 5 guesses
+Acceptance Criteria:
+1.	The player can select a word length from a dropdown or settings menu only at the start of the game.
+2.	The selected word length cannot be changed during gameplay.
+3.	Based on the selected word length, the number of guesses adjusts accordingly:
+o	3-letter word = 8 guesses
+o	4-letter word = 7 guesses
+o	5-letter word = 6 guesses
+o	6-letter word = 5 guesses
+o	7-letter word = 5 guesses
+4.	The game displays the correct number of guesses based on the chosen word length at the start of the game.
+5.	The word length and number of guesses affect the gameplay mechanics to ensure the difficulty is appropriately balanced.
+________________________________________
+US-23: Track Performance and Metrics
+As a player, I want to track various metrics related to my game performance, such as the difficulty selected, the number of guesses, the hints used, and the time spent so that I can monitor my progress and improve over time.
+Acceptance Criteria:
+1.	The following metrics should be tracked for each game session:
+o	Difficulty selected (word length chosen at the start)
+o	Number of guesses used (how many guesses were made by the player)
+o	Hints used (whether the player used a hint and how many times)
+o	Time spent (total time taken to complete the game)
+o	Score (based on predefined words from the list, correct guesses, and any penalties for hints or time)
+2.	The tracked metrics should be displayed at the end of the game session.
+3.	The metrics should be stored and associated with the player’s account to provide a historical record of their performance.
+4.	The score should consider:
+o	Points for guessing words from the predefined list.
+o	A penalty (if applicable) for using hints or taking more time than the allotted guesses.
+5.	A summary report should be generated at the end of the game session showing:
+o	Difficulty level
+o	Guesses used
+o	Hints used (and whether the hint was used before the last guess)
+o	Time spent
+o	Final score
+6.	The player’s performance data should be accessible at any time in the profile section, showing past game performance and statistics.
+

@@ -1,0 +1,28 @@
+{
+  "results": [
+    {
+      "id": "2025-02-11-1",
+      "date": "2025-02-11T12:30:00Z",
+      "word": "STEAM",
+      "guesses": ["STAND", "STAMP", "STEAM"],
+      "won": true,
+      "guessCount": 3,
+      "timeSpent": 120,
+      "score": 70,
+      "hintsUsed": 0,
+      "difficulty": "classic"
+    },
+    {
+      "id": "2025-02-11-2",
+      "date": "2025-02-11T14:45:00Z",
+      "word": "BRAIN",
+      "guesses": ["BRAKE", "BRAIN"],
+      "won": true,
+      "guessCount": 2,
+      "timeSpent": 85,
+      "score": 80,
+      "hintsUsed": 0,
+      "difficulty": "classic"
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+US-19: Hint Before Last Guess
+As a player, I want the game to provide a hint (definition of the word) before my last guess so that I can get additional help without spoiling the challenge.
+Acceptance Criteria:
+1.	A hint (the definition of the word) is displayed only if there is one guess remaining.
+2.	The hint is shown in a non-intrusive way (e.g., at the bottom of the screen).
+3.	The hint should be shown only once, immediately before the last guess, and cannot be accessed before that point.
+4.	The hint should not contain any spoilers and must remain general, such as describing the word’s meaning without revealing the word itself.
+________________________________________
+US-20: Word Validation & Predefined Word List
+As a player, I want my guesses to be verified against a dictionary and be checked against a predefined list of valid words from a JSON file so that I can increase my score when I use words from this list.
+Acceptance Criteria:
+1.	The player's guesses are verified against a standard dictionary to ensure they are valid words.
+2.	The app uses a JSON file that contains a predefined list of words.
+3.	If the player's guess matches a word in the predefined list, their score increases.
+4.	The score increase is tracked and displayed after each correct guess from the predefined list.
+5.	The system should provide feedback if the guessed word is not in the dictionary or predefined list (e.g., “Invalid word”).
+________________________________________
+US-21: Game Settings Customization
+As a player, I want to be able to adjust my settings, including turning on/off dark mode and enabling colorblind mode, so that I can personalize my gameplay experience.
+Acceptance Criteria:
+1.	The player can access a settings menu to enable or disable:
+o	Dark mode
+o	Colorblind mode
+2.	The settings are saved across sessions (i.e., preferences persist when the player returns to the game).
+3.	The visual changes in dark mode and colorblind mode are immediately reflected in the UI once enabled.
+4.	Dark mode adjusts the background to a darker color with lighter text.
+5.	Colorblind mode adjusts colors for better visibility (e.g., using different patterns or contrasts).
+________________________________________
+US-22: Score Tracking & Sharing
+As a player, I want to see my score after each guess and have it increase when I guess words from the predefined list (from the JSON file), so that I can track my progress and performance.
+Acceptance Criteria:
+1.	The player’s score is displayed on the screen after each guess.
+2.	The score increases by a certain amount (e.g., 10 points) when the player guesses a word from the predefined list.
+3.	The score is clearly visible to the player throughout the game.
+4.	The score should reset for each new daily game.
+5.	The player is able to share their results (score and number of attempts) on social media, with no spoilers (e.g., showing a number of attempts and success/failure, but not the word itself).
+
+________________________________________
+US-23: Track Performance and Metrics
+As a player, I want to track various metrics related to my game performance, such as the difficulty selected, the number of guesses, the hints used, and the time spent so that I can monitor my progress and improve over time.
+Acceptance Criteria:
+1.	The following metrics should be tracked for each game session:
+o	Difficulty selected (word length chosen at the start)
+o	Number of guesses used (how many guesses were made by the player)
+o	Hints used (whether the player used a hint and how many times)
+o	Time spent (total time taken to complete the game)
+o	Score (based on predefined words from the list, correct guesses, and any penalties for hints or time)
+2.	The tracked metrics should be displayed at the end of the game session.
+3.	The metrics should be stored and associated with the player’s account to provide a historical record of their performance.
+4.	The score should consider:
+o	Points for guessing words from the predefined list.
+o	A penalty (if applicable) for using hints or taking more time than the allotted guesses.
+5.	A summary report should be generated at the end of the game session showing:
+o	Difficulty level
+o	Guesses used
+o	Hints used (and whether the hint was used before the last guess)
+o	Time spent
+o	Final score
+6.	The player’s performance data should be accessible at any time in the profile section, showing past game performance and statistics.
+
