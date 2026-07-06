@@ -35,7 +35,7 @@ jobs:
 
           ssh-keyscan -p "$SERVER_PORT" -H "$SERVER_IP" >> ~/.ssh/known_hosts
 
-          remote_command="APP_DIR=$(printf '%q' "$SERVER_PATH") REPO_URL=$(printf '%q' "$REPO_URL") bash -s"
+          remote_command="APP_DIR=$(printf '%q' "$SERVER_PATH") REPO_URL=$(printf '%q' "$REPO_URL") bash -ls"
 
           ssh -i ~/.ssh/iread_deploy_key \
             -p "$SERVER_PORT" \
@@ -44,6 +44,21 @@ jobs:
           set -euo pipefail
 
           echo "Deploying iRead Games to $APP_DIR"
+
+          export NVM_DIR="$HOME/.nvm"
+          [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+          if command -v nvm > /dev/null 2>&1; then
+            nvm use default > /dev/null 2>&1 || nvm use --lts > /dev/null 2>&1 || true
+          fi
+
+          echo "Using node: $(command -v node || echo not found) ($(node -v 2>/dev/null || echo n/a))"
+          echo "Using npm: $(command -v npm || echo not found) ($(npm -v 2>/dev/null || echo n/a))"
+
+          NODE_MAJOR=$(node -e "console.log(process.versions.node.split('.')[0])" 2>/dev/null || echo 0)
+          if [ "$NODE_MAJOR" -lt 18 ]; then
+            echo "Node.js $(node -v 2>/dev/null || echo unknown) is too old (need >=18). Fix the PATH/nvm setup for non-interactive SSH sessions on the server." >&2
+            exit 1
+          fi
 
           git config --global --add safe.directory "$APP_DIR"
 
