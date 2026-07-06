@@ -58,4 +58,4 @@
    ```bash
    npm start        # Start production server
    
-   cd
+   cd/ci
