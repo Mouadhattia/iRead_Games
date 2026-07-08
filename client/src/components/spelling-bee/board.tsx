@@ -16,10 +16,11 @@ export default function SpellingBeeBoard({
   revealedWord = null,
   disabled = false,
 }: SpellingBeeBoardProps) {
-  const hexagonStyle = "before:content-[''] before:absolute before:w-full before:h-full before:bg-inherit before:rotate-[30deg] before:z-[-1] after:content-[''] after:absolute after:w-full after:h-full after:bg-inherit after:rotate-[-30deg] after:z-[-1]";
+  const hexagonStyle =
+    "[clip-path:polygon(50%_0%,100%_25%,100%_75%,50%_100%,0%_75%,0%_25%)]";
   const hintedLetter = revealedWord ? revealedWord[0] : null;
   const hintedTileStyle =
-    "ring-2 ring-yellow-500 bg-yellow-200 text-yellow-950 hover:bg-yellow-300";
+    "border-[3px] border-yellow-500 bg-yellow-200 text-yellow-950 hover:bg-yellow-300";
 
   // Using a fixed hexagonal pattern for all layouts with adjusted positions
   const letterPositions = {
@@ -90,12 +91,12 @@ export default function SpellingBeeBoard({
             onClick={() => !disabled && onLetterClick(centerLetter)}
             disabled={disabled}
             className={cn(
-              `relative flex h-14 w-14 items-center justify-center overflow-hidden bg-[hsl(var(--bee-center))] text-lg font-bold text-white hover:brightness-95 sm:h-16 sm:w-16 ${hexagonStyle}`,
+              `flex h-14 w-14 items-center justify-center bg-[hsl(var(--bee-center))] text-lg font-bold text-white hover:brightness-95 sm:h-16 sm:w-16 ${hexagonStyle}`,
               disabled && "cursor-not-allowed opacity-60",
               hintedLetter === centerLetter && hintedTileStyle
             )}
           >
-            <span className="relative z-10">{centerLetter}</span>
+            <span>{centerLetter}</span>
           </button>
         </motion.div>
 
@@ -115,12 +116,12 @@ export default function SpellingBeeBoard({
                 onClick={() => !disabled && onLetterClick(letter)}
                 disabled={disabled}
                 className={cn(
-                  `relative flex h-14 w-14 items-center justify-center overflow-hidden border-2 border-border bg-card text-lg font-bold text-card-foreground hover:bg-accent sm:h-16 sm:w-16 ${hexagonStyle}`,
+                  `flex h-14 w-14 items-center justify-center border-2 border-border bg-card text-lg font-bold text-card-foreground hover:bg-accent sm:h-16 sm:w-16 ${hexagonStyle}`,
                   disabled && "cursor-not-allowed opacity-60",
                   hintedLetter === letter && hintedTileStyle
                 )}
               >
-                <span className="relative z-10">{letter}</span>
+                <span>{letter}</span>
               </button>
             </motion.div>
           );
