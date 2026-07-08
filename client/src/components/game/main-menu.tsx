@@ -25,15 +25,7 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
-import {
-  Brain,
-  Hexagon,
-  Grid,
-  Search,
-  Sparkles,
-  Trophy,
-  Zap,
-} from "lucide-react";
+import { Sparkles, Trophy, Zap } from "lucide-react";
 import { motion } from "framer-motion";
 import { apiRequest, fetchJsonOrThrow } from "@/lib/queryClient.ts";
 import { useGameStore } from "@/lib/game.ts";
@@ -52,8 +44,8 @@ const COMPETITION_CHALLENGES_ENABLED = false;
 const competitionDateKey = () => new Date().toISOString().slice(0, 10);
 const gameCardClass =
   "game-menu-card flex h-full min-h-[250px] flex-col overflow-hidden transition-colors";
-const gameCardHeaderClass = "min-h-[74px]";
-const gameCardContentClass = "grid flex-1 content-start gap-2";
+const gameCardHeaderClass = "min-h-[74px] game-menu-header";
+const gameCardContentClass = "grid flex-1 content-start gap-2 game-menu-content";
 const gameActionClass =
   "game-menu-action flex min-h-10 w-full items-center rounded-lg bg-secondary/50 px-3 py-2 text-left text-sm font-medium transition-colors hover:bg-secondary";
 const leaderboardActionClass =
@@ -353,13 +345,17 @@ export default function MainMenu() {
           transition={{ delay: 0.1 }}
         >
           <Card className={`${gameCardClass} game-card-think`}>
+            <div className="game-menu-glyph" aria-hidden="true">
+              <div className="glyph glyph-think">
+                <span className="t">R</span>
+                <span className="t">E</span>
+                <span className="t is-hit">A</span>
+                <span className="t">D</span>
+                <span className="t">S</span>
+              </div>
+            </div>
             <CardHeader className={gameCardHeaderClass}>
-              <CardTitle className="game-menu-card-title flex items-center gap-3">
-                <span className="game-menu-icon">
-                  <Brain className="h-6 w-6" />
-                </span>
-                <span>Think Word</span>
-              </CardTitle>
+              <CardTitle className="game-menu-card-title">Think Word</CardTitle>
               <CardDescription>{gameDescriptions.thinkWord}</CardDescription>
             </CardHeader>
             <CardContent className={gameCardContentClass}>
@@ -409,13 +405,19 @@ export default function MainMenu() {
           transition={{ delay: 0.2 }}
         >
           <Card className={`${gameCardClass} game-card-bee`}>
+            <div className="game-menu-glyph" aria-hidden="true">
+              <div className="glyph glyph-bee">
+                <span className="hex ring n1"></span>
+                <span className="hex ring n2"></span>
+                <span className="hex ring n3"></span>
+                <span className="hex ring n4"></span>
+                <span className="hex ring n5"></span>
+                <span className="hex ring n6"></span>
+                <span className="hex center"><span>B</span></span>
+              </div>
+            </div>
             <CardHeader className={gameCardHeaderClass}>
-              <CardTitle className="game-menu-card-title flex items-center gap-3">
-                <span className="game-menu-icon">
-                  <Hexagon className="h-6 w-6" />
-                </span>
-                <span>Bee Genius</span>
-              </CardTitle>
+              <CardTitle className="game-menu-card-title">Bee Genius</CardTitle>
               <CardDescription>{gameDescriptions.beeGenius}</CardDescription>
             </CardHeader>
             <CardContent className={gameCardContentClass}>
@@ -466,13 +468,24 @@ export default function MainMenu() {
           transition={{ delay: 0.3 }}
         >
           <Card className={`${gameCardClass} game-card-link`}>
+            <div className="game-menu-glyph" aria-hidden="true">
+              <div className="glyph glyph-link">
+                <span className="bar v1"></span>
+                <span className="bar h1"></span>
+                <span className="bar v2"></span>
+                <span className="dot p1"></span>
+                <span className="dot p2"></span>
+                <span className="dot p4"></span>
+                <span className="dot p6"></span>
+                <span className="dot p7"></span>
+                <span className="dot on p0"></span>
+                <span className="dot on p3"></span>
+                <span className="dot on p5"></span>
+                <span className="dot on p8"></span>
+              </div>
+            </div>
             <CardHeader className={gameCardHeaderClass}>
-              <CardTitle className="game-menu-card-title flex items-center gap-3">
-                <span className="game-menu-icon">
-                  <Grid className="h-6 w-6" />
-                </span>
-                <span>Intellect Link</span>
-              </CardTitle>
+              <CardTitle className="game-menu-card-title">Intellect Link</CardTitle>
               <CardDescription>
                 {gameDescriptions.intellectLink}
               </CardDescription>
@@ -528,13 +541,19 @@ export default function MainMenu() {
           transition={{ delay: 0.4 }}
         >
           <Card className={`${gameCardClass} game-card-search`}>
+            <div className="game-menu-glyph" aria-hidden="true">
+              <div className="glyph glyph-explorer">
+                <div className="glyph-explorer-cells">
+                  <span className="c on"></span><span className="c"></span><span className="c"></span><span className="c"></span>
+                  <span className="c"></span><span className="c on"></span><span className="c"></span><span className="c"></span>
+                  <span className="c"></span><span className="c"></span><span className="c on"></span><span className="c"></span>
+                  <span className="c"></span><span className="c"></span><span className="c"></span><span className="c on"></span>
+                </div>
+                <span className="loupe"></span>
+              </div>
+            </div>
             <CardHeader className={gameCardHeaderClass}>
-              <CardTitle className="game-menu-card-title flex items-center gap-3">
-                <span className="game-menu-icon">
-                  <Search className="h-6 w-6" />
-                </span>
-                <span>Word Explorer</span>
-              </CardTitle>
+              <CardTitle className="game-menu-card-title">Word Explorer</CardTitle>
               <CardDescription>{gameDescriptions.wordExplorer}</CardDescription>
             </CardHeader>
             <CardContent className={gameCardContentClass}>

@@ -297,24 +297,30 @@
     font-weight: 800;
   }
 
+  /* Accents are synced to each game's own gameplay palette rather than
+     chosen freestanding: think = --tile-correct (the "correct letter" tile
+     color), bee = --bee-center, search = --word-highlight-6 (one of its own
+     found-word colors). Link has no native color of its own (Strands rides
+     the theme --primary), so it takes the hue that evenly completes the
+     wheel between the other three (~90 degrees apart). */
   .game-card-think {
-    --game-card-accent: 330 92% 56%;
-    --game-card-soft: 330 100% 97%;
+    --game-card-accent: 142 64% 38%;
+    --game-card-soft: 142 64% 96%;
   }
 
   .game-card-bee {
-    --game-card-accent: 43 96% 50%;
-    --game-card-soft: 48 100% 95%;
+    --game-card-accent: 45 92% 48%;
+    --game-card-soft: 45 92% 95%;
   }
 
   .game-card-link {
-    --game-card-accent: 190 90% 43%;
-    --game-card-soft: 190 100% 96%;
+    --game-card-accent: 225 78% 58%;
+    --game-card-soft: 225 78% 96%;
   }
 
   .game-card-search {
-    --game-card-accent: 142 72% 40%;
-    --game-card-soft: 142 72% 96%;
+    --game-card-accent: 326 88% 58%;
+    --game-card-soft: 326 88% 96%;
   }
 
   .game-view-kids .game-menu-card {
@@ -347,27 +353,14 @@
     box-shadow: 0 12px 26px hsl(226 34% 18% / 0.18);
   }
 
-  .game-menu-card > div:first-of-type {
+  .game-menu-header {
     min-height: 4rem;
     padding: 0.85rem 1rem 0.35rem;
   }
 
-  .game-menu-card > div:nth-of-type(2) {
+  .game-menu-content {
     gap: 0.5rem;
     padding: 0 1rem 0.9rem;
-  }
-
-  .game-menu-card::before {
-    content: "";
-    display: block;
-    height: 0.32rem;
-    flex: 0 0 auto;
-    background: hsl(var(--game-card-accent));
-  }
-
-  .game-view-teens .game-menu-card::before {
-    height: 0.25rem;
-    background: linear-gradient(90deg, hsl(var(--game-card-accent)), hsl(45 96% 52%));
   }
 
   .game-view-kids .game-menu-card:hover,
@@ -384,26 +377,156 @@
     letter-spacing: 0;
   }
 
-  .game-menu-icon {
-    display: inline-flex;
-    width: 1.85rem;
-    height: 1.85rem;
+  /* Full-bleed brand panel: one custom pictogram per game, drawn in white
+     over the game's own accent color, instead of a small icon-in-circle. */
+  .game-menu-glyph {
+    display: flex;
     align-items: center;
     justify-content: center;
     flex: 0 0 auto;
-    border-radius: 0.5rem;
+    height: 108px;
+    background: radial-gradient(120% 140% at 30% 20%, hsl(var(--game-card-accent) / 0.85), hsl(var(--game-card-accent)));
   }
 
-  .game-view-kids .game-menu-icon {
-    color: hsl(var(--game-card-accent));
-    background: hsl(var(--game-card-accent) / 0.15);
-    box-shadow: inset 0 0 0 2px hsl(var(--game-card-accent) / 0.18);
+  .glyph {
+    position: relative;
+    width: 82px;
+    height: 82px;
   }
 
-  .game-view-teens .game-menu-icon {
+  /* Think Word: five tiles spelling READS, one locked in */
+  .glyph-think {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+  }
+
+  .glyph-think .t {
+    width: 14px;
+    height: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1.4px solid hsl(0 0% 100% / 0.55);
+    border-radius: 3px;
+    font-family: ui-monospace, "SF Mono", "Cascadia Mono", monospace;
+    font-size: 8px;
+    font-weight: 700;
+    color: hsl(0 0% 100%);
+  }
+
+  .glyph-think .t.is-hit {
+    background: hsl(0 0% 100%);
     color: hsl(var(--game-card-accent));
-    background: hsl(var(--game-card-accent) / 0.14);
-    border: 1px solid hsl(var(--game-card-accent) / 0.35);
+    border-color: transparent;
+  }
+
+  /* Bee Genius: honeycomb flower, one lit centre cell */
+  .glyph-bee .hex {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 26px;
+    height: 30px;
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    margin: -15px 0 0 -13px;
+  }
+
+  .glyph-bee .hex.ring {
+    border: 1.4px solid hsl(0 0% 100% / 0.5);
+    background: hsl(0 0% 100% / 0.06);
+  }
+
+  .glyph-bee .hex.center {
+    background: hsl(0 0% 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .glyph-bee .hex.center span {
+    font-family: inherit;
+    font-weight: 800;
+    font-size: 12px;
+    color: hsl(var(--game-card-accent));
+  }
+
+  .glyph-bee .hex.n1 { transform: translate(0px, -25px); }
+  .glyph-bee .hex.n2 { transform: translate(22px, -12px); }
+  .glyph-bee .hex.n3 { transform: translate(22px, 12px); }
+  .glyph-bee .hex.n4 { transform: translate(0px, 25px); }
+  .glyph-bee .hex.n5 { transform: translate(-22px, 12px); }
+  .glyph-bee .hex.n6 { transform: translate(-22px, -12px); }
+
+  /* Intellect Link: a path drawn across a letter grid */
+  .glyph-link .bar {
+    position: absolute;
+    background: hsl(0 0% 100% / 0.75);
+  }
+  .glyph-link .bar.v1 { left: 14px; top: 14px; width: 2px; height: 28px; }
+  .glyph-link .bar.h1 { left: 14px; top: 42px; width: 56px; height: 2px; }
+  .glyph-link .bar.v2 { left: 68px; top: 42px; width: 2px; height: 28px; }
+
+  .glyph-link .dot {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    margin: -3px;
+    border-radius: 50%;
+    background: hsl(0 0% 100% / 0.28);
+  }
+  .glyph-link .dot.on {
+    width: 9px;
+    height: 9px;
+    margin: -4.5px;
+    background: hsl(0 0% 100%);
+    box-shadow: 0 0 0 2.5px hsl(0 0% 100% / 0.25);
+  }
+  .glyph-link .dot.p0 { left: 14px; top: 14px; } .glyph-link .dot.p1 { left: 41px; top: 14px; } .glyph-link .dot.p2 { left: 69px; top: 14px; }
+  .glyph-link .dot.p3 { left: 14px; top: 43px; } .glyph-link .dot.p4 { left: 41px; top: 43px; } .glyph-link .dot.p5 { left: 69px; top: 43px; }
+  .glyph-link .dot.p6 { left: 14px; top: 71px; } .glyph-link .dot.p7 { left: 41px; top: 71px; } .glyph-link .dot.p8 { left: 69px; top: 71px; }
+
+  /* Word Explorer: a found word cutting a diagonal, loupe in the corner */
+  .glyph-explorer-cells {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+    width: 70px;
+    height: 70px;
+    margin: 0 auto;
+  }
+  .glyph-explorer .c {
+    border: 1.2px solid hsl(0 0% 100% / 0.35);
+    border-radius: 2px;
+  }
+  .glyph-explorer .c.on {
+    background: hsl(0 0% 100%);
+    border-color: transparent;
+  }
+  .glyph-explorer .loupe {
+    position: absolute;
+    right: -3px;
+    bottom: -3px;
+    width: 16px;
+    height: 16px;
+    border: 2px solid hsl(0 0% 100%);
+    border-radius: 50%;
+  }
+  .glyph-explorer .loupe::after {
+    content: "";
+    position: absolute;
+    right: -5px;
+    bottom: -5px;
+    width: 2px;
+    height: 8px;
+    background: hsl(0 0% 100%);
+    transform: rotate(45deg);
+    transform-origin: top;
+  }
+
+  .game-view-kids .game-menu-glyph {
+    border-radius: 0.4rem 0.4rem 0 0;
   }
 
   .game-view-kids .game-menu-card svg {
@@ -668,6 +791,14 @@
       min-height: auto;
     }
 
+    .game-menu-glyph {
+      height: 84px;
+    }
+
+    .glyph {
+      transform: scale(0.82);
+    }
+
     .game-view-teens .game-menu-page {
       padding-top: 4rem;
     }
@@ -687,7 +818,7 @@
   }
 
   @media (min-width: 768px) {
-    .game-menu-card > div:nth-of-type(2) {
+    .game-menu-content {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 
