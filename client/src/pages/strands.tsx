@@ -17,6 +17,7 @@ import GameLoadError, {
 } from "@/components/shared/game-load-error";
 import { useGameView } from "@/lib/game-view";
 import { submitWordAttempt } from "@/lib/word-attempts";
+import { submitPracticePlay } from "@/lib/practice-play";
 import { postGameRecap, isEmbeddedInParentFrame } from "@/lib/game-recap";
 
 const useQuerys = () => {
@@ -54,6 +55,7 @@ export default function Strands() {
     useHint,
     isGameOver,
     endGame,
+    startTime,
   } = useStrandsStore();
 
   useEffect(() => {
@@ -202,6 +204,16 @@ export default function Strands() {
 
       if (isComplete) {
         endGame();
+        submitPracticePlay({
+          bookId: id,
+          userId,
+          game: "intellect-link",
+          score: useStrandsStore.getState().score,
+          timeSpentSeconds: startTime
+            ? Math.floor((Date.now() - startTime) / 1000)
+            : undefined,
+          wordsLearned: nextStoryWords,
+        });
         postGameRecap({
           game: "intellect-link",
           mode: "practice",

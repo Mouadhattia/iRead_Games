@@ -662,6 +662,42 @@ export function registerRoutes(app: Express): Server {
       res.status(500).json({ error: error });
     }
   });
+  // Practice-mode-only equivalent of /api/save-result: unlike that route,
+  // this always creates a new PracticePlay row rather than upserting by day,
+  // since practice is unlimited and every finished round should count toward
+  // the parent dashboard's "games played" chart.
+  app.post("/api/practice-play", async (req, res) => {
+    const { user_id, book_id, game, score, words_learned, time_spent_seconds } =
+      req.body;
+
+    if (!process.env.IREAD_API) {
+      return res.status(500).json({ error: "IRead API URL is not configured" });
+    }
+
+    try {
+      const baseUrl = process.env.IREAD_API.replace(/\/+$/, "");
+      const response = await requestJson(`${baseUrl}/reader/practice-play`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Cookie: req.headers.cookie || "",
+        },
+        body: JSON.stringify({
+          user_id,
+          book_id,
+          game,
+          score,
+          words_learned,
+          time_spent_seconds,
+        }),
+      });
+
+      res.status(response.status || 500).json(response.data);
+    } catch (error) {
+      console.error("Error submitting practice play:", error);
+      res.status(500).json({ error: error });
+    }
+  });
   app.post("/api/update-result", async (req, res) => {
     const { score, words_learned, completed, id, time_spent_seconds } = req.body;
     if (!id) {

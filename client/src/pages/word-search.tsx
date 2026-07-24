@@ -36,6 +36,7 @@ import {
   submitWordAttempts,
   hintLevelToTier,
 } from "@/lib/word-attempts";
+import { submitPracticePlay } from "@/lib/practice-play";
 import { postGameRecap, isEmbeddedInParentFrame } from "@/lib/game-recap";
 
 const useQuerys = () => {
@@ -227,6 +228,15 @@ export default function WordSearch() {
       description: `Found ${wordsLearned.length} words. Final score: ${finalScore}.`,
     });
 
+    submitPracticePlay({
+      bookId: id,
+      userId,
+      game: "word-explorer",
+      score: finalScore,
+      timeSpentSeconds: getTimeLimit(difficulty) - timeLeft,
+      wordsLearned,
+    });
+
     postGameRecap({
       game: "word-explorer",
       mode: "practice",
@@ -267,6 +277,15 @@ export default function WordSearch() {
       title: "Time's Up!",
       description: `You found ${foundWords.length} words!`,
       variant: "destructive",
+    });
+
+    submitPracticePlay({
+      bookId: id,
+      userId,
+      game: "word-explorer",
+      score,
+      timeSpentSeconds: getTimeLimit(difficulty) - timeLeft,
+      wordsLearned: foundWords,
     });
 
     postGameRecap({

@@ -23,6 +23,7 @@ import GameLoadError, {
 } from "@/components/shared/game-load-error";
 import { useGameView } from "@/lib/game-view";
 import { submitWordAttempt } from "@/lib/word-attempts";
+import { submitPracticePlay } from "@/lib/practice-play";
 import { postGameRecap, isEmbeddedInParentFrame } from "@/lib/game-recap";
 
 type DifficultyLevel = "3" | "4" | "5" | "6" | "7";
@@ -247,6 +248,12 @@ export default function SpellingBee() {
 
       if (isComplete) {
         endGame();
+        submitPracticePlay({
+          bookId: id,
+          userId,
+          game: "bee-genius",
+          wordsLearned: nextStoryWords,
+        });
         postGameRecap({
           game: "bee-genius",
           mode: "practice",

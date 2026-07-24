@@ -28,6 +28,7 @@ import GameLoadError, {
 } from "@/components/shared/game-load-error";
 import { useGameView } from "@/lib/game-view";
 import { submitWordAttempt } from "@/lib/word-attempts";
+import { submitPracticePlay } from "@/lib/practice-play";
 import { postGameRecap, isEmbeddedInParentFrame } from "@/lib/game-recap";
 
 /**
@@ -266,6 +267,14 @@ export default function Game() {
           hintsUsed: hintsUsedThisGame,
           heaviestHintTier: hintsUsedThisGame > 0 ? "light" : null,
         });
+        submitPracticePlay({
+          bookId: id,
+          userId,
+          game: "think-word",
+          score: useGameStore.getState().gameMetrics?.finalScore,
+          timeSpentSeconds: useGameStore.getState().gameMetrics?.timeSpent,
+          wordsLearned: [targetWord],
+        });
         toast({
           title: "Congratulations!",
           description: `You won! Current streak: ${stats.streak + 1} 🎉`,
@@ -289,6 +298,13 @@ export default function Game() {
           game: "think-word",
           mode: "practice",
           correct: false,
+        });
+        submitPracticePlay({
+          bookId: id,
+          userId,
+          game: "think-word",
+          score: useGameStore.getState().gameMetrics?.finalScore,
+          timeSpentSeconds: useGameStore.getState().gameMetrics?.timeSpent,
         });
         toast({
           title: "Game Over",
