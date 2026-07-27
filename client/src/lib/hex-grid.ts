@@ -48,20 +48,30 @@ export function hexGrid(maxRadius: number): HexCell[] {
   return cells;
 }
 
-// Pixel offset (in tile-size units, relative to the center cell) for a pointy-top
-// hex laid out edge-to-edge. `spacing` > 1 adds a uniform gap between tiles.
+// A pointy-top regular hexagon is taller than it is wide by this ratio, so a tile
+// box sized off its width must scale its height by it — otherwise the shape is
+// squashed and the rings below no longer tessellate.
+export const HEX_ASPECT = 2 / Math.sqrt(3); // ≈ 1.1547
+
+// Row-to-row spacing is 3/4 of the hexagon's HEIGHT, which in units of its width
+// works out to √3/2. Using 0.75 here (the height-relative figure) against a
+// width-based tile size is what makes neighbouring rings overlap.
+const ROW_SPACING = Math.sqrt(3) / 2; // ≈ 0.8660
+
+// Offset from the center cell, expressed in units of the tile's WIDTH (both axes,
+// so a single CSS length drives the layout). `spacing` > 1 adds a uniform gap.
 export function hexOffset(cell: HexCell, spacing = 1) {
   return {
     x: spacing * (cell.q + cell.r / 2),
-    y: spacing * 0.75 * cell.r,
+    y: spacing * ROW_SPACING * cell.r,
   };
 }
 
-// Bounding box (in tile-size units) needed to fit every cell within `maxRadius`
-// rings, including the tile's own width/height so nothing gets clipped at the edges.
+// Bounding box (in units of the tile's width) needed to fit every cell within
+// `maxRadius` rings, including the tile itself so nothing clips at the edges.
 export function hexGridExtent(maxRadius: number, spacing = 1) {
   return {
     width: spacing * 2 * maxRadius + 1,
-    height: spacing * 1.5 * maxRadius + 1,
+    height: spacing * 2 * ROW_SPACING * maxRadius + HEX_ASPECT,
   };
 }
