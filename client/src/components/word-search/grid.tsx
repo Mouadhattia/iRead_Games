@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef, type CSSProperties } from "react";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
+import { Lightbulb } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 // Array of colors for highlighting different words
 const HIGHLIGHT_COLORS = [
@@ -31,6 +33,7 @@ interface WordSearchGridProps {
     baseScore: number;
     hintPenalty: number;
   };
+  showWordList?: boolean;
 }
 
 interface Position {
@@ -54,6 +57,7 @@ export default function WordSearchGrid({
   difficulty,
   disabled = false,
   scoring = { baseScore: 10, hintPenalty: 0.3 },
+  showWordList = true,
 }: WordSearchGridProps) {
   const [selection, setSelection] = useState<Position[]>([]);
   const [foundWords, setFoundWords] = useState<WordPosition[]>([]);
@@ -338,6 +342,26 @@ export default function WordSearchGrid({
       setClickedWord({ word, clicks: 2, colorIndex });
     }
   };
+
+  // When the word list is hidden, the player can't pick a word to hint —
+  // continue hinting whichever word is already partway hinted, otherwise
+  // start on the next word that hasn't been hinted yet.
+  const pickAutoHintWord = (): string | null => {
+    const inProgress = words.find(
+      ({ word }) => !isWordFound(word) && hintsUsed.get(word) === 1
+    );
+    if (inProgress) return inProgress.word;
+
+    const fresh = words.find(
+      ({ word }) => !isWordFound(word) && !hintsUsed.get(word)
+    );
+    return fresh ? fresh.word : null;
+  };
+
+  const handleAutoHint = () => {
+    const word = pickAutoHintWord();
+    if (word) handleWordClick(word);
+  };
   const calculateLineStyle = (
     startPos: Position,
     endPos: Position,
@@ -600,44 +624,86 @@ export default function WordSearchGrid({
         <h3 className="text-lg font-medium mb-2">
           Words to Find ({words.length - foundWords.length} remaining)
         </h3>
-        <div className="flex flex-wrap gap-2">
-          {words.map(({ word, direction }) => {
-            const isFound = isWordFound(word);
-            const hintLevel = hintsUsed.get(word) || 0;
-            const deduction = hintDeductions.get(word) || 0;
+        {showWordList ? (
+          <div className="flex flex-wrap gap-2">
+            {words.map(({ word, direction }) => {
+              const isFound = isWordFound(word);
+              const hintLevel = hintsUsed.get(word) || 0;
+              const deduction = hintDeductions.get(word) || 0;
 
-            return (
-              <div
-                key={word}
-                onClick={() => !isFound && handleWordClick(word)}
-                className={cn(
-                  "px-3 py-1 rounded-full text-sm font-medium transition-colors flex items-center gap-2",
-                  isFound
-                    ? "bg-primary/20 text-primary"
-                    : hintLevel > 0
-                    ? "bg-yellow-500/20 text-yellow-500"
-                    : "bg-secondary hover:bg-primary/10 cursor-pointer"
-                )}
-              >
-                <span>{word}</span>
-                {(hintLevel > 0 || selectedHintWord === word) && (
-                  <motion.span
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    className="text-xs opacity-70"
+              return (
+                <div
+                  key={word}
+                  onClick={() => !isFound && handleWordClick(word)}
+                  className={cn(
+                    "px-3 py-1 rounded-full text-sm font-medium transition-colors flex items-center gap-2",
+                    isFound
+                      ? "bg-primary/20 text-primary"
+                      : hintLevel > 0
+                      ? "bg-yellow-500/20 text-yellow-500"
+                      : "bg-secondary hover:bg-primary/10 cursor-pointer"
+                  )}
+                >
+                  <span>{word}</span>
+                  {(hintLevel > 0 || selectedHintWord === word) && (
+                    <motion.span
+                      initial={{ opacity: 0, scale: 0.8 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      className="text-xs opacity-70"
+                    >
+                      {direction}
+                    </motion.span>
+                  )}
+                  {hintLevel > 0 && (
+                    <span className="text-xs opacity-70">
+                      (-{deduction} points)
+                    </span>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          <div className="space-y-3">
+            {foundWords.length > 0 && (
+              <div className="flex flex-wrap gap-2">
+                {foundWords.map(({ word }) => (
+                  <div
+                    key={word}
+                    className="px-3 py-1 rounded-full text-sm font-medium bg-primary/20 text-primary"
                   >
-                    {direction}
-                  </motion.span>
-                )}
-                {hintLevel > 0 && (
-                  <span className="text-xs opacity-70">
-                    (-{deduction} points)
-                  </span>
-                )}
+                    {word}
+                  </div>
+                ))}
               </div>
-            );
-          })}
-        </div>
+            )}
+
+            <div className="flex items-center gap-3">
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                disabled={disabled || !pickAutoHintWord()}
+                onClick={handleAutoHint}
+              >
+                <Lightbulb className="h-4 w-4 mr-1" />
+                Hint
+              </Button>
+              {clickedWord && !isWordFound(clickedWord.word) && (
+                <motion.span
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="text-xs text-muted-foreground"
+                >
+                  {clickedWord.clicks === 1
+                    ? "Direction revealed on the grid"
+                    : "Position revealed on the grid"}{" "}
+                  (-{hintDeductions.get(clickedWord.word) || 0} points)
+                </motion.span>
+              )}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

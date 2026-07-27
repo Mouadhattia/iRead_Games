@@ -12,6 +12,8 @@ import {
   Share2,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Label } from "@/components/ui/label";
+import { Switch } from "@/components/ui/switch";
 import WordSearchGrid from "@/components/word-search/grid";
 import { useGameStore } from "@/lib/game";
 import { GameConfig } from "@shared/config";
@@ -43,6 +45,8 @@ const useQuerys = () => {
   return new URLSearchParams(window.location.search);
 };
 
+const SHOW_WORD_LIST_STORAGE_KEY = "word-explorer-show-word-list";
+
 type WordSearchDifficulty = "easy" | "medium" | "hard" | "expert";
 
 const getTimeLimit = (difficulty: WordSearchDifficulty): number =>
@@ -55,6 +59,10 @@ export default function WordSearch() {
   const mainMenuPath = id ? `/?id=${id}` : "/";
   const [, setLocation] = useLocation();
   const [difficulty, setDifficulty] = useState<WordSearchDifficulty>("medium");
+  const [showWordList, setShowWordList] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return window.localStorage.getItem(SHOW_WORD_LIST_STORAGE_KEY) === "true";
+  });
   const [foundWords, setFoundWords] = useState<string[]>([]);
   const [hintsUsedTotal, setHintsUsedTotal] = useState(0);
   const [timeLeft, setTimeLeft] = useState<number>(() =>
@@ -79,6 +87,14 @@ export default function WordSearch() {
       resetGame();
     };
   }, [resetGame]);
+
+  const handleShowWordListChange = (checked: boolean) => {
+    setShowWordList(checked);
+    window.localStorage.setItem(
+      SHOW_WORD_LIST_STORAGE_KEY,
+      checked ? "true" : "false"
+    );
+  };
 
   useEffect(() => {
     // See game.tsx — the parent's recap overlay covers this moment when embedded.
@@ -463,6 +479,21 @@ export default function WordSearch() {
                   Expert (8×8 Grid)
                 </Button>
               </div>
+
+              <div className="flex items-center justify-between gap-4 mt-6 pt-4 border-t">
+                <Label
+                  htmlFor="show-word-list"
+                  className="text-sm font-medium"
+                >
+                  Show words to find
+                </Label>
+                <Switch
+                  id="show-word-list"
+                  checked={showWordList}
+                  onCheckedChange={handleShowWordListChange}
+                  aria-label="Show words to find"
+                />
+              </div>
             </CardContent>
           </Card>
         </motion.div>
@@ -560,6 +591,7 @@ export default function WordSearch() {
         difficulty={difficulty}
         scoring={puzzleData.scoring}
         disabled={isGameOver}
+        showWordList={showWordList}
       />
 
       <GameResultModal
