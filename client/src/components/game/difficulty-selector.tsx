@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { useGameStore } from "@/lib/game";
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { getMaxGuesses } from "@shared/config";
 
 const difficultyLabels: Record<number, string> = {
   5: "Classic",
@@ -89,7 +90,7 @@ export default function DifficultySelector() {
                 <Label htmlFor={`length-${length}`} className="flex-1">
                   {difficultyLabels[length]} ({length} letters)
                   <span className="text-sm text-muted-foreground ml-2">
-                    (6 guesses)
+                    ({getMaxGuesses(length)} guesses)
                   </span>
                 </Label>
               </div>
