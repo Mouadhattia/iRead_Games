@@ -13,7 +13,7 @@ interface SpellingBeeBoardProps {
 // Two concentric rings around the center (1 + 6 + 12 = 19 hexagons), so the honeycomb
 // keeps its shape however many letters a puzzle uses today — or adds later.
 const RING_DEPTH = 2;
-const TILE_SPACING = 1.08; // >1 leaves a small gap between adjacent hexagons
+const TILE_SPACING = 1.04; // >1 leaves a small gap between adjacent hexagons
 const GRID = hexGrid(RING_DEPTH);
 const OUTER_CELLS = GRID.slice(1); // everything but the center cell, in ring order
 const EXTENT = hexGridExtent(RING_DEPTH, TILE_SPACING);
@@ -22,9 +22,9 @@ const EXTENT = hexGridExtent(RING_DEPTH, TILE_SPACING);
 // stroke-linejoin="round" (fill == stroke color) so each corner reads as
 // gently rounded instead of sharp.
 const HEX_POINTS = "50,3 95.6,26.5 95.6,73.5 50,97 4.4,73.5 4.4,26.5";
-// Same hexagon inset ~12% toward its own center — used as the "fill" layer
-// on top of a full-size "border" layer, giving active tiles a visible ring.
-const HEX_POINTS_INSET = "50,8.64 90.13,29.32 90.13,70.68 50,91.36 9.87,70.68 9.87,29.32";
+// Same hexagon inset ~8% toward its own center — used as the "fill" layer on
+// top of a full-size "border" layer, giving active tiles a thin visible ring.
+const HEX_POINTS_INSET = "50,6.76 91.95,28.38 91.95,71.62 50,93.24 8.05,71.62 8.05,28.38";
 
 export default function SpellingBeeBoard({
   letters,
@@ -91,7 +91,7 @@ export default function SpellingBeeBoard({
                   ? "hsl(var(--tile-present))"
                   : "hsl(var(--bee-center))"
               }
-              strokeWidth={7}
+              strokeWidth={4}
               strokeLinejoin="round"
             />
           </svg>
@@ -122,9 +122,9 @@ export default function SpellingBeeBoard({
                 <svg viewBox="0 0 100 100" className="h-full w-full overflow-visible">
                   <polygon
                     points={HEX_POINTS}
-                    fill="hsl(var(--muted) / 0.35)"
-                    stroke="hsl(var(--border) / 0.6)"
-                    strokeWidth={3}
+                    fill="hsl(var(--muted) / 0.55)"
+                    stroke="hsl(var(--border))"
+                    strokeWidth={2}
                     strokeLinejoin="round"
                   />
                 </svg>
@@ -161,14 +161,14 @@ export default function SpellingBeeBoard({
                   points={HEX_POINTS}
                   fill={isHinted ? "hsl(var(--tile-present))" : "hsl(var(--border))"}
                   stroke={isHinted ? "hsl(var(--tile-present))" : "hsl(var(--border))"}
-                  strokeWidth={6}
+                  strokeWidth={4}
                   strokeLinejoin="round"
                 />
                 <polygon
                   points={HEX_POINTS_INSET}
                   fill={isHinted ? "hsl(var(--tile-present) / 0.3)" : "hsl(var(--card))"}
                   stroke={isHinted ? "hsl(var(--tile-present) / 0.3)" : "hsl(var(--card))"}
-                  strokeWidth={3}
+                  strokeWidth={2}
                   strokeLinejoin="round"
                 />
               </svg>
