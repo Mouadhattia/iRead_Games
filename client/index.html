@@ -3,8 +3,28 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!--
+      Every route here is an authenticated game surface launched from the reader
+      app with a book/pack context (see client/src/App.tsx). Opened cold by a
+      crawler they render an empty or error state, so keep them out of the index
+      and let iread.education/vocabulary-games be the page that ranks for these
+      games instead.
+    -->
+    <meta name="robots" content="noindex, nofollow" />
+
+    <title>iRead Games — Vocabulary Practice</title>
+    <meta
+      name="description"
+      content="Word games built from the story you are reading: Think Word, Bee Genius, Intellect Link, and Word Explorer."
+    />
+    <meta name="theme-color" content="#2364db" />
   </head>
   <body>
+    <noscript>
+      iRead Games needs JavaScript. Open your daily games from your iRead
+      dashboard.
+    </noscript>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

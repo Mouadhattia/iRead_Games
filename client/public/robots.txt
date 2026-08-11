@@ -1,0 +1,9 @@
+# https://www.robotstxt.org/robotstxt.html
+#
+# games.iread.education is an app surface, not content. Every route needs a
+# book/pack context passed in from the reader app, so there is nothing here for
+# a crawler to index. The public-facing page about these games is
+# https://iread.education/vocabulary-games
+
+User-agent: *
+Disallow: /

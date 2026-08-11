@@ -776,6 +776,9 @@ export function registerRoutes(app: Express): Server {
       leaderboardUrl.searchParams.set("game", game);
       if (date) leaderboardUrl.searchParams.set("date", date);
       if (userId) leaderboardUrl.searchParams.set("user_id", userId);
+      const statusSchoolId = getRequestSchoolId(req);
+      if (statusSchoolId)
+        leaderboardUrl.searchParams.set("school_id", statusSchoolId);
       leaderboardUrl.searchParams.set("limit", "100");
 
       const leaderboardResponse = await requestJson(leaderboardUrl, {
@@ -829,6 +832,11 @@ export function registerRoutes(app: Express): Server {
       if (limit) url.searchParams.set("limit", limit);
       const userId = normalizeId(req.query.user_id);
       if (userId) url.searchParams.set("user_id", userId);
+      // The school decides the ranking scope -- own school, or every school
+      // playing this book in step. Without it a reader who belongs to more
+      // than one school has no resolvable scope and sees only their own row.
+      const schoolId = getRequestSchoolId(req);
+      if (schoolId) url.searchParams.set("school_id", schoolId);
 
       const response = await requestJson(url, {
         headers: {
